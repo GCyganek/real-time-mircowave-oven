@@ -1,0 +1,10 @@
+package Alarm
+public
+	with Base_Types;
+	
+	device Alarm
+		features
+			AlarmOnOff: in data port Base_Types::Boolean;
+	end Alarm;
+
+end Alarm;

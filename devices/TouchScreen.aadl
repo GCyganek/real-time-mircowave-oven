@@ -1,0 +1,9 @@
+package TouchScreen
+public
+	with Types;
+   device TouchScreen
+      features
+        Input: out data port Types::TouchScreenInput;
+   end TouchScreen;
+	
+end TouchScreen;

@@ -1,0 +1,10 @@
+package Light
+public
+	with Base_Types;
+	
+	device Light
+		features
+			LightOnOff: in data port Base_Types::Boolean;
+	end Light;
+
+end Light;

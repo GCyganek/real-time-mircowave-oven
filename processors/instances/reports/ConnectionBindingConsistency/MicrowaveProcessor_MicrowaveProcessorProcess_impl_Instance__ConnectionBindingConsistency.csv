@@ -1,0 +1,3 @@
+Check connection binding consistency Report
+
+Warning! TouchScreenInputProcessor.MicrowaveMode -> MicrowaveModeProcessor.MicrowaveMode: Connection source and/or destination is not bound to hardware

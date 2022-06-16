@@ -1,0 +1,10 @@
+package Turntable
+public
+	with Base_Types;
+	
+	device Turntable
+		features
+			TurntableOnOff: in data port Base_Types::Boolean;
+	end Turntable;
+
+end Turntable;

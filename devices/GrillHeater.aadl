@@ -1,0 +1,10 @@
+package GrillHeater
+public
+	with Base_Types;
+	
+	device GrillHeater
+		features
+			HeatingOnOff: in data port Base_Types::Boolean;
+	end GrillHeater;
+	
+end GrillHeater;

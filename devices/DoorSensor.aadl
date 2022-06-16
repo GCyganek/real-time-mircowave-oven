@@ -1,0 +1,10 @@
+package DoorSensor
+public
+	with Base_Types;
+	
+	device DoorSensor
+		features
+			DoorOpen: out data port Base_Types::Boolean;
+	end DoorSensor;
+	
+end DoorSensor;

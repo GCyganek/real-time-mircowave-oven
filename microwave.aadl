@@ -1,0 +1,63 @@
+package microwave
+public
+	with
+	Alarm, DoorSensor, Light, TemperatureSensor, TouchScreen, Turntable, Fan, Display, GrillHeater, Magnetron,
+	MicrowaveProcessor, GrillHeaterProcessor, MagnetronProcessor;
+	
+	system MicrowaveSystem
+	end MicrowaveSystem;
+	
+	system implementation MicrowaveSystem.impl
+		subcomponents
+			-- devices
+			Alarm: device Alarm::Alarm;
+			DoorSensor: device DoorSensor::DoorSensor;
+			Light: device Light::Light;
+			TemperatureSensor: device TemperatureSensor::TemperatureSensor;
+			TouchScreen: device TouchScreen::TouchScreen;
+			Turntable: device Turntable::Turntable;
+			Fan: device Fan::Fan;
+			Display: device Display::Display;
+			GrillHeater: device GrillHeater::GrillHeater;
+			Magnetron: device Magnetron::Magnetron;
+			-- processor
+			MicrowaveProcessor: processor MicrowaveProcessor::MicrowaveProcessor;
+			MagnetronProcessor: processor MagnetronProcessor::MagnetronProcessor;
+			GrillHeaterProcessor: processor GrillHeaterProcessor::GrillHeaterProcessor;
+			-- processes
+			MicrowaveProcessorProcess: process MicrowaveProcessor::MicrowaveProcessorProcess.impl;
+			MagnetronProcessorProcess: process MagnetronProcessor::MagnetronProcessorProcess.impl;
+			GrillHeaterProcessorProcess: process GrillHeaterProcessor::GrillHeaterProcessorProcess.impl;
+			-- buses
+			MicrowaveBus: bus MicrowaveProcessor::MicrowaveBus;
+			MagnetronBus: bus MagnetronProcessor::MagnetronBus;
+			GrillHeaterBus: bus GrillHeaterProcessor::GrillHeaterBus;
+		connections
+			MicrowaveBusCon1: bus access MicrowaveBus -> MicrowaveProcessor.MicrowaveBus;
+			MagnetronBusCon1: bus access MagnetronBus -> MagnetronProcessor.MagnetronBus;
+			GrillHeaterBusCon1: bus access GrillHeaterBus -> GrillHeaterProcessor.GrillHeaterBus;
+			TemperatureToMicrowaveProcessor: port TemperatureSensor.TempOut -> MicrowaveProcessorProcess.Temperature;
+			DoorSensorToMicrowaveProcessor: port DoorSensor.DoorOpen -> MicrowaveProcessorProcess.DoorOpen;
+			TouchScreenToMicrowaveProcessor: port TouchScreen.Input -> MicrowaveProcessorProcess.TouchScreenInput;
+			MicrowaveProcessorToFan: port MicrowaveProcessorProcess.FanPower -> Fan.FanPower;
+			MicrowaveProcessorToLight: port MicrowaveProcessorProcess.LightOnOff -> Light.LightOnOff;
+			MicrowaveProcessorToAlarm: port MicrowaveProcessorProcess.AlarmOnOff -> Alarm.AlarmOnOff;
+			MicrowaveProcessorToTurntable: port MicrowaveProcessorProcess.TurntableOnOff -> Turntable.TurntableOnOff;
+			MicrowaveProcessorToDisplay: port MicrowaveProcessorProcess.DisplayOutput -> Display.DisplayInput;
+			MicrowaveProcessorToMagnetron: port MicrowaveProcessorProcess.MagnetronPowerLevel -> MagnetronProcessorProcess.PowerLevel;
+			MicrowaveProcessorToGrillHeater: port MicrowaveProcessorProcess.GrillTemperature -> GrillHeaterProcessorProcess.TargetTemperature;
+			GrillHeaterProcessorToGrillHeater: port GrillHeaterProcessorProcess.HeaterOnOff -> GrillHeater.HeatingOnOff;
+			MagnetronProcessToMagnetron: port MagnetronProcessorProcess.MagnetronOnOff -> Magnetron.MagnetronOnOff;
+		properties
+			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to TemperatureToMicrowaveProcessor;
+			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to DoorSensorToMicrowaveProcessor;
+			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to TouchScreenToMicrowaveProcessor;
+			Actual_Connection_Binding => (reference(MagnetronBus)) applies to MicrowaveProcessorToMagnetron;
+			Actual_Connection_Binding => (reference(GrillHeaterBus)) applies to MicrowaveProcessorToGrillHeater;
+			Actual_Processor_Binding => (reference(MicrowaveProcessor)) applies to MicrowaveProcessorProcess;
+			Actual_Processor_Binding => (reference(MagnetronProcessor)) applies to MagnetronProcessorProcess;
+			Actual_Processor_Binding => (reference(GrillHeaterProcessor)) applies to GrillHeaterProcessorProcess;
+			
+	end MicrowaveSystem.impl;
+	
+end microwave;

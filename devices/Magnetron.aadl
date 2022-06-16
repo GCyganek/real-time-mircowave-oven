@@ -1,0 +1,10 @@
+package Magnetron
+public
+	with Base_Types;
+	
+	device Magnetron
+		features
+			MagnetronOnOff: in data port Base_Types::Boolean;
+	end Magnetron;
+	
+end Magnetron;

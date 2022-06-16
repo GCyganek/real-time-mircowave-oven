@@ -1,0 +1,113 @@
+package MicrowaveProcessor
+public
+	with Base_Types, Types;
+	
+	-- bus start
+	
+	bus MicrowaveBus
+	end MicrowaveBus;
+	
+	-- bus end
+	
+	-- processor start
+	
+	processor MicrowaveProcessor
+		features
+			MicrowaveBus: requires bus access MicrowaveBus;
+	end MicrowaveProcessor;
+	
+	-- processor end
+	
+	-- threads start
+	
+	thread TouchScreenInputProcessor
+		features
+			TouchScreenInput: in data port Types::TouchScreenInput;
+			MicrowaveMode: out data port Types::MicrowaveMode;
+		properties
+			Dispatch_Protocol => Periodic;
+			Dispatch_Offset => 2ms;
+			Deadline => 15ms;
+			Period => 20ms;
+			Compute_Execution_Time => 0ms .. 2ms;
+	end TouchScreenInputProcessor;
+	
+	thread implementation TouchScreenInputProcessor.impl
+	end TouchScreenInputProcessor.impl;
+	
+	thread FanController
+		features
+			Temperature: in data port Base_Types::Integer;
+			FanPower: out data port Base_Types::Integer;
+		properties
+			Dispatch_Protocol => Periodic;
+			Dispatch_Offset => 2ms;
+			Deadline => 15ms;
+			Period => 20ms;
+			Compute_Execution_Time => 0ms .. 2ms;
+	end FanController;
+	
+	thread implementation FanController.impl
+	end FanController.impl;
+	
+	thread MicrowaveModeProcessor
+		features
+			MicrowaveMode: in data port Types::MicrowaveMode;
+			DoorOpen: in data port Base_Types::Boolean;
+			LightOnOff: out data port Base_Types::Boolean;
+			AlarmOnOff: out data port Base_Types::Boolean;
+			TurntableOnOff: out data port Base_Types::Boolean;
+			MagnetronPowerLevel: out data port Types::MagnetronPowerLevel;
+			GrillTemperature: out data port Base_Types::Integer;
+			DisplayOutput: out data port Base_Types::String;
+		properties
+			Dispatch_Protocol => Periodic;
+			Dispatch_Offset => 2ms;
+			Deadline => 15ms;
+			Period => 20ms;
+			Compute_Execution_Time => 0ms .. 2ms;
+	end MicrowaveModeProcessor;
+	
+	thread implementation MicrowaveModeProcessor.impl
+	end MicrowaveModeProcessor.impl;
+	
+	-- threads end
+	
+	-- process start
+	
+	process MicrowaveProcessorProcess
+		features
+			TouchScreenInput: in data port Types::TouchScreenInput;
+			Temperature: in data port Base_Types::Integer;
+			DoorOpen: in data port Base_Types::Boolean;
+			FanPower: out data port Base_Types::Integer;
+			LightOnOff: out data port Base_Types::Boolean;
+			AlarmOnOff: out data port Base_Types::Boolean;
+			TurntableOnOff: out data port Base_Types::Boolean;
+			DisplayOutput: out data port Base_Types::String;
+			MagnetronPowerLevel: out data port Types::MagnetronPowerLevel;
+			GrillTemperature: out data port Base_Types::Integer;
+	end MicrowaveProcessorProcess;
+	
+	process implementation MicrowaveProcessorProcess.impl
+		subcomponents
+			FanController: thread FanController.impl;
+			TouchScreenInputProcessor: thread TouchScreenInputProcessor.impl;
+			MicrowaveModeProcessor: thread MicrowaveModeProcessor.impl;
+		connections
+			FanControllerCon1: port Temperature -> FanController.Temperature;
+			FanControllerCon2: port FanController.FanPower -> FanPower;
+			TouchScreenInputProcessorCon1: port TouchScreenInput -> TouchScreenInputProcessor.TouchScreenInput;
+			TouchScreenInputProcessorCon2: port TouchScreenInputProcessor.MicrowaveMode -> MicrowaveModeProcessor.MicrowaveMode;
+			MicrowaveModeProcessorCon1: port DoorOpen -> MicrowaveModeProcessor.DoorOpen;
+			MicrowaveModeProcessorCon2: port MicrowaveModeProcessor.LightOnOff -> LightOnOff;
+			MicrowaveModeProcessorCon3: port MicrowaveModeProcessor.AlarmOnOff -> AlarmOnOff;
+			MicrowaveModeProcessorCon4: port MicrowaveModeProcessor.TurntableOnOff -> TurntableOnOff;
+			MicrowaveModeProcessorCon5: port MicrowaveModeProcessor.MagnetronPowerLevel -> MagnetronPowerLevel;
+			MicrowaveModeProcessorCon6: port MicrowaveModeProcessor.GrillTemperature -> GrillTemperature;
+			MicrowaveModeProcessorCon7: port MicrowaveModeProcessor.DisplayOutput -> DisplayOutput;
+	end MicrowaveProcessorProcess.impl;
+	
+	-- process end
+		
+end MicrowaveProcessor;

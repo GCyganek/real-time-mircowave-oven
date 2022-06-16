@@ -1,0 +1,58 @@
+package MagnetronProcessor
+public
+	with Base_Types, Types;
+	
+	-- bus start
+	
+	bus MagnetronBus
+	end MagnetronBus;
+	
+	-- bus end
+	
+	-- processor start
+	
+	processor MagnetronProcessor
+		features
+			MagnetronBus: requires bus access MagnetronBus;
+	end MagnetronProcessor;
+	
+	-- processor end
+
+	-- threads start
+	
+	thread MagnetronControllerThread
+		features
+			PowerLevel: in data port Types::MagnetronPowerLevel;
+			MagnetronOnOff: out data port Base_Types::Boolean;
+		properties
+			Dispatch_Protocol => Periodic;
+			Dispatch_Offset => 2ms;
+			Deadline => 15ms;
+			Period => 20ms;
+			Compute_Execution_Time => 0ms .. 2ms;
+	end MagnetronControllerThread;
+	
+	thread implementation MagnetronControllerThread.impl
+	end MagnetronControllerThread.impl;
+	
+	-- threads end
+	
+	-- process start
+	
+	process MagnetronProcessorProcess
+		features
+			PowerLevel: in data port Types::MagnetronPowerLevel;
+			MagnetronOnOff: out data port Base_Types::Boolean;
+	end MagnetronProcessorProcess;
+	
+	process implementation MagnetronProcessorProcess.impl
+		subcomponents
+			MagnetronControllerThread: thread MagnetronControllerThread.impl;
+		connections
+			PowerLevelPort: port PowerLevel -> MagnetronControllerThread.PowerLevel;
+			MagnetronOnOffPort: port MagnetronControllerThread.MagnetronOnOff -> MagnetronOnOff;
+	end MagnetronProcessorProcess.impl;
+	
+	-- process end
+
+end MagnetronProcessor;

@@ -1,0 +1,20 @@
+package Types
+public
+	with Data_Model;
+	
+  data MicrowaveMode 
+  properties 
+    Data_Model::Data_Representation => Integer;
+  end MicrowaveMode;
+  
+  data TouchScreenInput
+  	properties
+  		Data_Model::Data_Representation => String;
+  end TouchScreenInput;
+  
+  data MagnetronPowerLevel
+  	properties
+  		Data_Model::Data_Representation => Integer;
+  end MagnetronPowerLevel;
+	
+end Types;

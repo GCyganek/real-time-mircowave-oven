@@ -1,0 +1,10 @@
+package Fan
+public
+	with Base_Types;
+	
+	device Fan
+		features
+			FanPower: in data port Base_Types::Integer;
+	end Fan;
+	
+end Fan;

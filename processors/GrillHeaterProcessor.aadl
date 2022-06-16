@@ -1,0 +1,57 @@
+package GrillHeaterProcessor
+public
+		with Base_Types;
+	
+	-- bus start
+	
+	bus GrillHeaterBus
+	end GrillHeaterBus;
+	
+	-- bus end
+	
+	-- processor start
+	
+	processor GrillHeaterProcessor
+		features
+			GrillHeaterBus: requires bus access GrillHeaterBus;
+	end GrillHeaterProcessor;
+	
+	-- processor end
+	
+	-- threads start
+	
+	thread GrillHeaterControllerThread
+		features
+			TargetTemperature: in data port Base_Types::Integer;
+			HeaterOnOff: out data port Base_Types::Boolean;
+		properties
+			Dispatch_Protocol => Periodic;
+			Dispatch_Offset => 2ms;
+			Deadline => 15ms;
+			Period => 20ms;
+			Compute_Execution_Time => 0ms .. 2ms;
+	end GrillHeaterControllerThread;
+	
+	thread implementation GrillHeaterControllerThread.impl
+	end GrillHeaterControllerThread.impl;
+	
+	-- threads end
+	
+	-- process start
+	
+	process GrillHeaterProcessorProcess
+		features
+			TargetTemperature: in data port Base_Types::Integer;
+			HeaterOnOff: out data port Base_Types::Boolean;
+	end GrillHeaterProcessorProcess;
+	
+	process implementation GrillHeaterProcessorProcess.impl
+		subcomponents
+			GrillHeaterControllerThread: thread GrillHeaterControllerThread.impl;
+		connections
+			TargetTemperaturePort: port TargetTemperature -> GrillHeaterControllerThread.TargetTemperature;
+			HeaterOnOffPort: port GrillHeaterControllerThread.HeaterOnOff -> HeaterOnOff;
+	end GrillHeaterProcessorProcess.impl;
+	
+	-- process end
+end GrillHeaterProcessor;

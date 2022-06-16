@@ -1,0 +1,10 @@
+package TemperatureSensor
+public
+	with Base_Types;
+	
+	device TemperatureSensor
+		features
+			TempOut: out data port Base_Types::Integer;
+	end TemperatureSensor;
+	
+end TemperatureSensor;

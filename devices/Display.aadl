@@ -1,0 +1,10 @@
+package Display
+public
+		with Base_Types;
+	
+	device Display
+		features
+			DisplayInput: in data port Base_Types::String;
+	end Display;
+	
+end Display;
