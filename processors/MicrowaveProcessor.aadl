@@ -78,9 +78,23 @@ public
 	
 	-- process start
 	
-	process MicrowaveProcessorProcess
+	process TouchScreenProcess
 		features
 			TouchScreenInput: in data port Types::TouchScreenInput;
+			MicrowaveMode: out data port Types::MicrowaveMode;
+	end TouchScreenProcess;
+	
+	process implementation TouchScreenProcess.impl
+		subcomponents
+			TouchScreenInputProcessor: thread TouchScreenInputProcessor.impl;
+		connections
+			TouchScreenInputProcessorCon1: port TouchScreenInput -> TouchScreenInputProcessor.TouchScreenInput;
+			TouchScreenInputProcessorCon2: port TouchScreenInputProcessor.MicrowaveMode -> MicrowaveMode;
+	end TouchScreenProcess.impl;
+	
+	process MicrowaveProcessorProcess
+		features
+			MicrowaveMode: in data port Types::MicrowaveMode;
 			Temperature: in data port Base_Types::Integer;
 			DoorOpen: in data port Base_Types::Boolean;
 			FanPower: out data port Base_Types::Integer;
@@ -95,13 +109,10 @@ public
 	process implementation MicrowaveProcessorProcess.impl
 		subcomponents
 			FanController: thread FanController.impl;
-			TouchScreenInputProcessor: thread TouchScreenInputProcessor.impl;
 			MicrowaveModeProcessor: thread MicrowaveModeProcessor.impl;
 		connections
 			FanControllerCon1: port Temperature -> FanController.Temperature;
 			FanControllerCon2: port FanController.FanPower -> FanPower;
-			TouchScreenInputProcessorCon1: port TouchScreenInput -> TouchScreenInputProcessor.TouchScreenInput;
-			TouchScreenInputProcessorCon2: port TouchScreenInputProcessor.MicrowaveMode -> MicrowaveModeProcessor.MicrowaveMode;
 			MicrowaveModeProcessorCon1: port DoorOpen -> MicrowaveModeProcessor.DoorOpen;
 			MicrowaveModeProcessorCon2: port MicrowaveModeProcessor.LightOnOff -> LightOnOff;
 			MicrowaveModeProcessorCon3: port MicrowaveModeProcessor.AlarmOnOff -> AlarmOnOff;
@@ -109,6 +120,7 @@ public
 			MicrowaveModeProcessorCon5: port MicrowaveModeProcessor.MagnetronPowerLevel -> MagnetronPowerLevel;
 			MicrowaveModeProcessorCon6: port MicrowaveModeProcessor.GrillTemperature -> GrillTemperature;
 			MicrowaveModeProcessorCon7: port MicrowaveModeProcessor.DisplayOutput -> DisplayOutput;
+			MicrowaveModeProcessorCon8: port MicrowaveMode -> MicrowaveModeProcessor.MicrowaveMode;
 	end MicrowaveProcessorProcess.impl;
 	
 	-- process end

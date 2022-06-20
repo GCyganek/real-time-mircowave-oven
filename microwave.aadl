@@ -26,6 +26,7 @@ public
 			GrillHeaterProcessor: processor GrillHeaterProcessor::GrillHeaterProcessor;
 			-- processes
 			MicrowaveProcessorProcess: process MicrowaveProcessor::MicrowaveProcessorProcess.impl;
+			TouchScreenProcess: process MicrowaveProcessor::TouchScreenProcess.impl;
 			MagnetronProcessorProcess: process MagnetronProcessor::MagnetronProcessorProcess.impl;
 			GrillHeaterProcessorProcess: process GrillHeaterProcessor::GrillHeaterProcessorProcess.impl;
 			-- buses
@@ -54,7 +55,8 @@ public
 			-- ports
 			TemperatureToMicrowaveProcessor: port TemperatureSensor.TempOut -> MicrowaveProcessorProcess.Temperature;
 			DoorSensorToMicrowaveProcessor: port DoorSensor.DoorOpen -> MicrowaveProcessorProcess.DoorOpen;
-			TouchScreenToMicrowaveProcessor: port TouchScreen.Input -> MicrowaveProcessorProcess.TouchScreenInput;
+			TouchScreenToTouchScreenProcess: port TouchScreen.Input -> TouchScreenProcess.TouchScreenInput;
+			TouchScreenProcessToMicrowaveModeProcess: port TouchScreenProcess.MicrowaveMode -> MicrowaveProcessorProcess.MicrowaveMode;
 			MicrowaveProcessorToFan: port MicrowaveProcessorProcess.FanPower -> Fan.FanPower;
 			MicrowaveProcessorToLight: port MicrowaveProcessorProcess.LightOnOff -> Light.LightOnOff;
 			MicrowaveProcessorToAlarm: port MicrowaveProcessorProcess.AlarmOnOff -> Alarm.AlarmOnOff;
@@ -67,10 +69,12 @@ public
 		properties
 			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to TemperatureToMicrowaveProcessor;
 			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to DoorSensorToMicrowaveProcessor;
-			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to TouchScreenToMicrowaveProcessor;
+			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to TouchScreenToTouchScreenProcess;
+			Actual_Connection_Binding => (reference(MicrowaveBus)) applies to TouchScreenProcessToMicrowaveModeProcess;
 			Actual_Connection_Binding => (reference(MagnetronBus)) applies to MicrowaveProcessorToMagnetron;
 			Actual_Connection_Binding => (reference(GrillHeaterBus)) applies to MicrowaveProcessorToGrillHeater;
 			Actual_Processor_Binding => (reference(MicrowaveProcessor)) applies to MicrowaveProcessorProcess;
+			Actual_Processor_Binding => (reference(MicrowaveProcessor)) applies to TouchScreenProcess;
 			Actual_Processor_Binding => (reference(MagnetronProcessor)) applies to MagnetronProcessorProcess;
 			Actual_Processor_Binding => (reference(GrillHeaterProcessor)) applies to GrillHeaterProcessorProcess;
 			
