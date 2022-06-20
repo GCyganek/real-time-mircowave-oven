@@ -1,10 +1,11 @@
 package GrillHeater
 public
-	with Base_Types;
+	with Base_Types, GrillHeaterProcessor;
 	
 	device GrillHeater
 		features
 			HeatingOnOff: in data port Base_Types::Boolean;
+			GrillHeaterBus: requires bus access GrillHeaterProcessor::GrillHeaterBus;
 	end GrillHeater;
 	
 end GrillHeater;

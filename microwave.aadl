@@ -33,9 +33,25 @@ public
 			MagnetronBus: bus MagnetronProcessor::MagnetronBus;
 			GrillHeaterBus: bus GrillHeaterProcessor::GrillHeaterBus;
 		connections
+			-- buses
 			MicrowaveBusCon1: bus access MicrowaveBus -> MicrowaveProcessor.MicrowaveBus;
-			MagnetronBusCon1: bus access MagnetronBus -> MagnetronProcessor.MagnetronBus;
+			MicrowaveBusCon2: bus access MicrowaveBus -> TouchScreen.MicrowaveBus;
+			MicrowaveBusCon3: bus access MicrowaveBus -> TemperatureSensor.MicrowaveBus;
+			MicrowaveBusCon4: bus access MicrowaveBus -> DoorSensor.MicrowaveBus;
+			MicrowaveBusCon5: bus access MicrowaveBus -> Turntable.MicrowaveBus;
+			MicrowaveBusCon6: bus access MicrowaveBus -> Display.MicrowaveBus;
+			MicrowaveBusCon7: bus access MicrowaveBus -> Light.MicrowaveBus;
+			MicrowaveBusCon8: bus access MicrowaveBus -> Alarm.MicrowaveBus;
+			MicrowaveBusCon9: bus access MicrowaveBus -> Fan.MicrowaveBus;
+			MicrowaveBusCon10: bus access MicrowaveBus -> GrillHeaterProcessor.MicrowaveBus;
+			MicrowaveBusCon11: bus access MicrowaveBus -> MagnetronProcessor.MicrowaveBus;
 			GrillHeaterBusCon1: bus access GrillHeaterBus -> GrillHeaterProcessor.GrillHeaterBus;
+			GrillHeaterBusCon2: bus access GrillHeaterBus -> GrillHeater.GrillHeaterBus;
+			GrillHeaterBusCon3: bus access GrillHeaterBus -> MicrowaveProcessor.GrillHeaterBus;
+			MagnetronBusCon1: bus access MagnetronBus -> MagnetronProcessor.MagnetronBus;
+			MagnetronBusCon2: bus access MagnetronBus -> Magnetron.MagnetronBus;
+			MagnetronBusCon3: bus access MagnetronBus -> MicrowaveProcessor.MagnetronBus;
+			-- ports
 			TemperatureToMicrowaveProcessor: port TemperatureSensor.TempOut -> MicrowaveProcessorProcess.Temperature;
 			DoorSensorToMicrowaveProcessor: port DoorSensor.DoorOpen -> MicrowaveProcessorProcess.DoorOpen;
 			TouchScreenToMicrowaveProcessor: port TouchScreen.Input -> MicrowaveProcessorProcess.TouchScreenInput;

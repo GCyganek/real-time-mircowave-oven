@@ -1,10 +1,11 @@
 package Light
 public
-	with Base_Types;
+	with Base_Types, MicrowaveProcessor;
 	
 	device Light
 		features
 			LightOnOff: in data port Base_Types::Boolean;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
 	end Light;
 
 end Light;

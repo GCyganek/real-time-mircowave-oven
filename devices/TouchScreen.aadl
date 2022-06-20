@@ -1,9 +1,10 @@
 package TouchScreen
 public
-	with Types;
+	with Types, MicrowaveProcessor;
    device TouchScreen
       features
         Input: out data port Types::TouchScreenInput;
+        MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
    end TouchScreen;
 	
 end TouchScreen;

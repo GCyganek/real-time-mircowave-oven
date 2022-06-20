@@ -1,10 +1,11 @@
 package TemperatureSensor
 public
-	with Base_Types;
+	with Base_Types, MicrowaveProcessor;
 	
 	device TemperatureSensor
 		features
 			TempOut: out data port Base_Types::Integer;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
 	end TemperatureSensor;
 	
 end TemperatureSensor;

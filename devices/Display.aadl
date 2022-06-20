@@ -1,10 +1,11 @@
 package Display
 public
-		with Base_Types;
+		with Base_Types, MicrowaveProcessor;
 	
 	device Display
 		features
 			DisplayInput: in data port Base_Types::String;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
 	end Display;
 	
 end Display;

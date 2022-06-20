@@ -1,10 +1,11 @@
 package Magnetron
 public
-	with Base_Types;
+	with Base_Types, MagnetronProcessor;
 	
 	device Magnetron
 		features
 			MagnetronOnOff: in data port Base_Types::Boolean;
+			MagnetronBus: requires bus access MagnetronProcessor::MagnetronBus;
 	end Magnetron;
 	
 end Magnetron;

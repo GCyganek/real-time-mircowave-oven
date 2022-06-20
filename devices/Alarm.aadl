@@ -1,10 +1,11 @@
 package Alarm
 public
-	with Base_Types;
+	with Base_Types, MicrowaveProcessor;
 	
 	device Alarm
 		features
 			AlarmOnOff: in data port Base_Types::Boolean;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
 	end Alarm;
 
 end Alarm;

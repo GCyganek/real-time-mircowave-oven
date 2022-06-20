@@ -1,10 +1,11 @@
 package DoorSensor
 public
-	with Base_Types;
+	with Base_Types, MicrowaveProcessor;
 	
 	device DoorSensor
 		features
 			DoorOpen: out data port Base_Types::Boolean;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
 	end DoorSensor;
 	
 end DoorSensor;

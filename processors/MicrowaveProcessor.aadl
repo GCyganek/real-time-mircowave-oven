@@ -1,6 +1,6 @@
 package MicrowaveProcessor
 public
-	with Base_Types, Types;
+	with Base_Types, Types, MagnetronProcessor, GrillHeaterProcessor;
 	
 	-- bus start
 	
@@ -14,6 +14,12 @@ public
 	processor MicrowaveProcessor
 		features
 			MicrowaveBus: requires bus access MicrowaveBus;
+			MagnetronBus: requires bus access MagnetronProcessor::MagnetronBus;
+			GrillHeaterBus: requires bus access GrillHeaterProcessor::GrillHeaterBus;
+		properties
+			Scheduling_Protocol => (RMS);
+			Priority_Range => 1 .. 1;
+			Clock_Period => 1 ms;
 	end MicrowaveProcessor;
 	
 	-- processor end
@@ -26,7 +32,6 @@ public
 			MicrowaveMode: out data port Types::MicrowaveMode;
 		properties
 			Dispatch_Protocol => Periodic;
-			Dispatch_Offset => 2ms;
 			Deadline => 15ms;
 			Period => 20ms;
 			Compute_Execution_Time => 0ms .. 2ms;
@@ -41,7 +46,6 @@ public
 			FanPower: out data port Base_Types::Integer;
 		properties
 			Dispatch_Protocol => Periodic;
-			Dispatch_Offset => 2ms;
 			Deadline => 15ms;
 			Period => 20ms;
 			Compute_Execution_Time => 0ms .. 2ms;
@@ -62,7 +66,6 @@ public
 			DisplayOutput: out data port Base_Types::String;
 		properties
 			Dispatch_Protocol => Periodic;
-			Dispatch_Offset => 2ms;
 			Deadline => 15ms;
 			Period => 20ms;
 			Compute_Execution_Time => 0ms .. 2ms;

@@ -1,10 +1,11 @@
 package Turntable
 public
-	with Base_Types;
+	with Base_Types, MicrowaveProcessor;
 	
 	device Turntable
 		features
 			TurntableOnOff: in data port Base_Types::Boolean;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
 	end Turntable;
 
 end Turntable;

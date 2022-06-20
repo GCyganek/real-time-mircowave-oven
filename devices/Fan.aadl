@@ -1,10 +1,11 @@
 package Fan
 public
-	with Base_Types;
+	with Base_Types, MicrowaveProcessor;
 	
 	device Fan
 		features
 			FanPower: in data port Base_Types::Integer;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
 	end Fan;
 	
 end Fan;

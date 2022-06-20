@@ -1,6 +1,6 @@
 package MagnetronProcessor
 public
-	with Base_Types, Types;
+	with Base_Types, Types, MicrowaveProcessor;
 	
 	-- bus start
 	
@@ -14,6 +14,11 @@ public
 	processor MagnetronProcessor
 		features
 			MagnetronBus: requires bus access MagnetronBus;
+			MicrowaveBus: requires bus access MicrowaveProcessor::MicrowaveBus;
+		properties
+			Scheduling_Protocol => (RMS);
+			Priority_Range => 1 .. 1;
+			Clock_Period => 1 ms;
 	end MagnetronProcessor;
 	
 	-- processor end
@@ -26,7 +31,6 @@ public
 			MagnetronOnOff: out data port Base_Types::Boolean;
 		properties
 			Dispatch_Protocol => Periodic;
-			Dispatch_Offset => 2ms;
 			Deadline => 15ms;
 			Period => 20ms;
 			Compute_Execution_Time => 0ms .. 2ms;
