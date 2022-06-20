@@ -17,8 +17,7 @@ public
 			MagnetronBus: requires bus access MagnetronProcessor::MagnetronBus;
 			GrillHeaterBus: requires bus access GrillHeaterProcessor::GrillHeaterBus;
 		properties
-			Scheduling_Protocol => (RMS);
-			Priority_Range => 1 .. 1;
+			Scheduling_Protocol => (Round_Robin_Protocol);
 			Clock_Period => 1 ms;
 	end MicrowaveProcessor;
 	
@@ -34,7 +33,7 @@ public
 			Dispatch_Protocol => Periodic;
 			Deadline => 15ms;
 			Period => 20ms;
-			Compute_Execution_Time => 0ms .. 2ms;
+			Compute_Execution_Time => 3ms .. 5ms;
 	end TouchScreenInputProcessor;
 	
 	thread implementation TouchScreenInputProcessor.impl
@@ -68,7 +67,7 @@ public
 			Dispatch_Protocol => Periodic;
 			Deadline => 15ms;
 			Period => 20ms;
-			Compute_Execution_Time => 0ms .. 2ms;
+			Compute_Execution_Time => 5ms .. 7ms;
 	end MicrowaveModeProcessor;
 	
 	thread implementation MicrowaveModeProcessor.impl
